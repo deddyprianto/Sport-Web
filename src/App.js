@@ -1,58 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+import React, { lazy, Suspense } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-function App() {
+import Data from "./components/Home/Data";
+import Navbar from "./components/Layout/Navbar";
+
+const Cari = lazy(() => import("./components/Home/Cari"));
+const Location = lazy(() => import("./components/Location"));
+
+// bc219ef74c3adef5fb79e356e59a3748
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
-    </div>
+    <Suspense
+      fallback={<h1 className="text-gray-700 text-center">Loading...</h1>}
+    >
+      <Router>
+        <div className="grid grid-cols-13 md:grid-cols-14">
+          <Navbar />
+          <Switch>
+            <Route path="/location">
+              <Location />
+            </Route>
+            <Route path="/">
+              <Cari />
+            </Route>
+          </Switch>
+        </div>
+      </Router>
+    </Suspense>
   );
-}
+};
 
 export default App;
